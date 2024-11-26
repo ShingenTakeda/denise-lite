@@ -1,0 +1,49 @@
+[gd_scene load_steps=9 format=3 uid="uid://hg1vbkiuthn4"]
+
+[ext_resource type="Script" path="res://Entities/entities_scripts/player_scripts/player.gd" id="1_bonjn"]
+[ext_resource type="Script" path="res://Entities/entities_scripts/StateMachine.gd" id="2_5muf2"]
+[ext_resource type="Script" path="res://Entities/entities_scripts/player_scripts/idle_state.gd" id="3_nqrpq"]
+[ext_resource type="Script" path="res://Entities/entities_scripts/player_scripts/walking_state.gd" id="4_tomb0"]
+[ext_resource type="Script" path="res://Entities/entities_scripts/player_scripts/sprint_state.gd" id="5_h8ofu"]
+[ext_resource type="Script" path="res://Entities/entities_scripts/player_scripts/look_around_state.gd" id="6_xxm4l"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_rlapa"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xpvep"]
+radius = 0.565484
+height = 2.14487
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_bonjn")
+WALKING_SPEED = 4.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_rlapa")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_xpvep")
+
+[node name="cam" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.26717, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="cam"]
+transform = Transform3D(0.970662, 0, 0.240448, -0.0574976, 0.970988, 0.232111, -0.233472, -0.239127, 0.942502, 0, -0.26717, 0)
+target_position = Vector3(0.5, 0.5, -2)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
+script = ExtResource("2_5muf2")
+CURRENT_STATE = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("3_nqrpq")
+
+[node name="WalkingState" type="Node" parent="StateMachine"]
+script = ExtResource("4_tomb0")
+
+[node name="SprintState" type="Node" parent="StateMachine"]
+script = ExtResource("5_h8ofu")
+
+[node name="LookAroundState" type="Node" parent="StateMachine"]
+script = ExtResource("6_xxm4l")

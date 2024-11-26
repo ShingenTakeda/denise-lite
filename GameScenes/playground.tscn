@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://c6c72go8q3fgx"]
+
+[ext_resource type="PackedScene" uid="uid://hg1vbkiuthn4" path="res://Entities/player.tscn" id="1_x3ytr"]
+[ext_resource type="PackedScene" uid="uid://cyp5lm2s8qwy4" path="res://Entities/Console.tscn" id="2_vv086"]
+[ext_resource type="PackedScene" uid="uid://day7jsj1w1hvc" path="res://Entities/Text_editor.tscn" id="3_qeyji"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ol6dw"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_c3b2v"]
+sky_material = SubResource("ProceduralSkyMaterial_ol6dw")
+
+[sub_resource type="Environment" id="Environment_h0hda"]
+background_mode = 2
+sky = SubResource("Sky_c3b2v")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_u7h0h"]
+
+[node name="Playground" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 15.7347, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_h0hda")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.65989, -6.5)
+use_collision = true
+size = Vector3(57, 14.7412, 30)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.70189, 3.49541, -0.825685)
+operation = 2
+use_collision = true
+size = Vector3(35.7238, 8.31427, 25)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.535, 2.16878, -0.024292)
+operation = 2
+use_collision = true
+size = Vector3(19.7567, 9.00024, 25.175)
+
+[node name="Player" parent="." instance=ExtResource("1_x3ytr")]
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 0.694401, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.3696, 1.05038, -5.51153)
+mesh = SubResource("BoxMesh_u7h0h")
+
+[node name="Console" parent="." instance=ExtResource("2_vv086")]
+transform = Transform3D(0.518475, 0, -0.855093, 0, 1, 0, 0.855093, 0, 0.518475, 3.82627, 1.14352, 0)
+
+[node name="TextEditor" parent="." instance=ExtResource("3_qeyji")]
+transform = Transform3D(0.0191451, 0, -0.999817, 0, 1, 0, 0.999817, 0, 0.0191451, 2.97827, 1.11072, -1.43737)
